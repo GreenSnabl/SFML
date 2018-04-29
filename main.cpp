@@ -1,5 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <unistd.h>
 
 class TileMap : public sf::Drawable, public sf::Transformable
 {
@@ -152,6 +153,26 @@ int main()
     if (!map.load("tileset.png", sf::Vector2u(10, 10), level, 10, 10))
         return -1;
 
+    sf::Texture texture;
+    texture.loadFromFile("player.png");
+    
+    sf::RectangleShape rect;
+    rect.setPosition(sf::Vector2f(60, 60));
+    rect.setSize(sf::Vector2f(10,10));
+    rect.setTexture(&texture);
+    
+    sf::VertexArray quad(sf::Quads, 4);
+    quad[0].position = sf::Vector2f(40,40);
+    quad[1].position = sf::Vector2f(50,40);
+    quad[2].position = sf::Vector2f(50,50);
+    quad[3].position = sf::Vector2f(40,50);
+    
+    quad[0].texCoords = sf::Vector2f(0,0);
+    quad[1].texCoords = sf::Vector2f(10,0);
+    quad[2].texCoords = sf::Vector2f(10,10);
+    quad[3].texCoords = sf::Vector2f(0,10);
+
+    
     // run the main loop
     while (window.isOpen())
     {
@@ -163,10 +184,33 @@ int main()
                 window.close();
         }
 
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
+        {
+            rect.move(-10, 0);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+        {
+            rect.move(0, 10);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+        {
+            rect.move(10, 0);
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::W))
+        {
+            rect.move(0, -10);
+        }
+        
+        usleep(1000000);
         // draw the map
         window.clear();
         window.draw(map);
+        window.draw(rect);
+        window.draw(quad, &texture);
         window.display();
+        usleep(1000000);
+        
+        
     }
 
     return 0;
