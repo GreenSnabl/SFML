@@ -4,6 +4,8 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
+      <itemPath>Animation.h</itemPath>
+      <itemPath>Tilemap.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -12,7 +14,9 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>animation.cpp</itemPath>
+      <itemPath>Animation.cpp</itemPath>
+      <itemPath>Tilemap.cpp</itemPath>
+      <itemPath>anim.cpp</itemPath>
       <itemPath>main.cpp</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -46,7 +50,15 @@
           <commandLine>-lsfml-graphics -lsfml-window -lsfml-system</commandLine>
         </linkerTool>
       </compileType>
-      <item path="animation.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Animation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Animation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tilemap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tilemap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="anim.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -72,7 +84,15 @@
           <developmentMode>5</developmentMode>
         </asmTool>
       </compileType>
-      <item path="animation.cpp" ex="false" tool="1" flavor2="0">
+      <item path="Animation.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Animation.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Tilemap.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Tilemap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="anim.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="main.cpp" ex="false" tool="1" flavor2="0">
       </item>

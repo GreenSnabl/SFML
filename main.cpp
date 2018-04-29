@@ -104,9 +104,10 @@ using namespace sf;
 using std::cout;
 using std::endl;
 
-
+/*  Der alte Code mit pimaldaumen gecodeter Tilemap im Stil des DungeonCrawlers
 int main()
-{
+{    
+    
     // create the window
     sf::RenderWindow window(sf::VideoMode(320, 320), "Tilemap");
 
@@ -190,6 +191,113 @@ int main()
         
         
     }
-
+ 
     return 0;
 } 
+ */
+    
+
+// Die Main der Tilemap von Codebreaker
+    
+#include "Tilemap.h"
+#include "Animation.h"
+
+
+int main()
+{
+	sf::RenderWindow window(sf::VideoMode(800, 600), "Tilemap");
+ 
+	int map[] = {
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+		3, 3, 3, 3, 3, 3, 3, 3, 3, 3,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+		1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+	};
+ 
+	Tilemap themap("Tileset.png", 16, map, 10, 10);
+        
+        Sprite sprite;
+        sprite.setTexture(*themap.getTexture());    // Setze die Textur an der sich der sprite bedient
+        sprite.setTextureRect(IntRect(0,0,16,16));  // Setze den Texturausschnitt an der sich der Sprite bedient
+        sprite.setPosition(Vector2f(200.f,200.f));  // Setze absolute Position
+        sprite.move(Vector2f(50.f,50.f));           // Relative Bewegung / Offsetbewegung
+        
+        Texture playerTexture;
+        playerTexture.loadFromFile("explosion_3_40_128.png");
+        
+        sf::RectangleShape player(sf::Vector2f(128, 128));
+        sf::RectangleShape player2(sf::Vector2f(128,128));
+        
+        
+        player.setPosition(150,150);
+        player.setTexture(&playerTexture);
+        
+        player2.setPosition(300, 300);
+        player2.setTexture(&playerTexture);
+        
+        Animation animation(&playerTexture, sf::Vector2u(8,8), 0.1f);
+        Animation animation2(&playerTexture, sf::Vector2u(8,8), 0.1f);
+       
+        float deltaTime = 0.0f;
+
+        sf::Clock clock;
+        
+        
+	while (window.isOpen())
+	{
+                deltaTime = clock.restart().asSeconds();
+
+                
+                
+		sf::Event event;
+		while (window.pollEvent(event))
+		{
+			if (event.type == sf::Event::Closed)
+				window.close();
+                        if (event.type == sf::Event::KeyPressed)                        // Konstruiert man die Animation auf die Art, wie sie hier angewendet wird
+                        {                                                               // blockiert man den Mainloop und die Bewegung verzögert sich
+                            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))       // CyberPong realisiert eine fließende Bewegung + Animation der Paddle-Sprites (How?)
+                            {
+                                player.move(-10.f, 0.f);                            
+                            }
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+                            {
+                                player.move(10.f, 0.f);                            
+                            } 
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+                            {
+                                player.move(0.f, -10.f);                            
+                            }
+                            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+                            {
+                                player.move(0.f, 10.f);                            
+                            }
+                        }
+		}
+ 
+                animation.update(3, 38, deltaTime);
+                animation2.update(0,deltaTime);
+                
+                player.setTextureRect(animation.uvRect);
+                player2.setTextureRect(animation2.uvRect);
+                
+		window.clear();
+ 
+		themap.draw(window);
+                
+                window.draw(player);
+                window.draw(player2);
+                window.draw(sprite);
+ 
+		window.display();
+	}
+ 
+	return 0;
+}
+
